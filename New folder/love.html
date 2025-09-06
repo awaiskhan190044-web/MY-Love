@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Good Morning My Love</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Georgia', serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Blurred background */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("IMG-20250630-WA0020.jpg") no-repeat center center/cover;
+      filter: blur(20px) brightness(0.7);
+      z-index: -2;
+    }
+
+    /* Full picture centered */
+    body::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("IMG-20250630-WA0020.jpg") no-repeat center center/contain;
+      background-color: transparent;
+      z-index: -1;
+    }
+
+    .text-box {
+      background: rgba(255, 255, 255, 0.75);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 1;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    h1 {
+      color: #ff4081;
+      font-size: 2.5em;
+      margin: 0;
+      animation: pulse 2s infinite;
+    }
+
+    p {
+      color: #333;
+      font-size: 1.2em;
+      animation: fadeIn 5s ease-in-out;
+    }
+
+    /* Button */
+    .btn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1.2em;
+      background: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #e0356f;
+      transform: scale(1.05);
+    }
+
+    /* Surprise message */
+    .surprise {
+      margin-top: 20px;
+      font-size: 1.5em;
+      color: #d81b60;
+      display: none;
+      animation: typing 3s steps(40, end), fadeIn 2s ease-in-out;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #d81b60;
+    }
+
+    /* Hearts */
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      color: #ff1493;
+      animation: floatUp 6s linear forwards;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(1); opacity: 1; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    }
+
+    /* Fade-in */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Pulse */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Typing effect */
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+  </style>
+</head>
+<body>
+  <div class="text-box">
+    <h1>صبح بخیر میری جان ❤️</h1>
+    <p>تم میری مسکراہٹ کی وجہ ہو، میری صبح کی روشنی ☀️</p>
+    <button class="btn" onclick="showSurprise()">Click Me 💌</button>
+    <div class="surprise" id="surpriseMsg">میں ہمیشہ تم سے محبت کروں گا ❤️</div>
+  </div>
+
+  <!-- Background music (won't autoplay, plays on click) -->
+  <audio id="bgMusic" loop>
+    <source src="your-song.mp4" type="audio/mp3">
+  </audio>
+
+  <script>
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = ["❤️","💖","💕","💓"][Math.floor(Math.random()*4)];
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.fontSize = (20 + Math.random() * 30) + "px"; 
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    // create hearts every 700ms
+    let heartInterval = setInterval(createHeart, 700);
+
+    function showSurprise() {
+      const msg = document.getElementById("surpriseMsg");
+      msg.style.display = "inline-block";
+
+      // start music on click
+      const music = document.getElementById("bgMusic");
+      music.play();
+
+      // make hearts appear faster
+      clearInterval(heartInterval);
+      heartInterval = setInterval(createHeart, 300);
+    }
+  </script>
+</body>
+</html>
